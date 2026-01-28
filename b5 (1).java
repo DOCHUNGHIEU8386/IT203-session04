@@ -1,66 +1,63 @@
-import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class b5 {
-    static int deleteBook(int[] arr, int n, int bookId){
-        int index = -1;
-
-        for(int i = 0 ; i < n ; i++){
-            if(arr[i] == bookId){
-                index = i;
-                break;
-            }
-        }
-
-        if(index == -1){
-            System.out.println("Khong tim thay sach can xoa");
-            return n;
-        }
-
-        for(int i = index ; i < n - 1 ; i++){
-            arr[i] = arr[i+1];
-        }
-
-        n--;
-        System.out.println("Da xoa ma sach: " + bookId);
-        return n;
-    }
-
-    static void displayBooks(int[] arr , int n){
-        if(n == 0){
-            System.out.println("Danh sach rong");
-            return;
-        }
-        System.out.print("[");
-        for(int i = 0 ; i < n ; i++){
-            System.out.print(arr[i] + " ");
-        }
-        System.out.print("]");
-        System.out.println();
-    }
+public class Bai5_PhanTichNhatKyMuonTraSach {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int[] books = {101 , 102 , 103 , 104 , 105};
-        int n = books.length;
+        // Danh sách nhật ký mượn / trả sách
+        String[] logs = {
+                "2024-05-20 | User: NguyenVanA | Action: BORROW | BookID: BK12345",
+                "2024-05-21 | User: TranMinhB | Action: RETURN | BookID: BK67890",
+                "2024-05-22 | User: NguyenVanA | Action: BORROW | BookID: BK99999"
+        };
 
-        while(n > 0){
-            System.out.print("Kho sach hien tai (" + n + ") cuon : ");
-            displayBooks(books , n);
+        int borrowCount = 0;
+        int returnCount = 0;
 
-            System.out.print("Nhap ma sach can xoa (0 de thoat) :");
-            int bookId = sc.nextInt();
+        /*
+         * Regex sử dụng Capturing Groups để tách dữ liệu:
+         * Group 1: Ngày (YYYY-MM-DD)
+         * Group 2: Tên người dùng
+         * Group 3: Hành động (BORROW / RETURN)
+         * Group 4: Mã sách
+         */
+        Pattern pattern = Pattern.compile(
+                "(\\d{4}-\\d{2}-\\d{2})\\s*\\|\\s*" +
+                "User:\\s*(\\w+)\\s*\\|\\s*" +
+                "Action:\\s*(BORROW|RETURN)\\s*\\|\\s*" +
+                "BookID:\\s*(\\w+)"
+        );
 
-            if(bookId == 0){
-                System.out.println("Thoat chuong trinh");
-                break;
+        // Duyệt từng dòng log
+        for (String log : logs) {
+            Matcher matcher = pattern.matcher(log);
+
+            // Kiểm tra dòng log có đúng định dạng hay không
+            if (matcher.find()) {
+
+                String date = matcher.group(1);
+                String user = matcher.group(2);
+                String action = matcher.group(3);
+                String bookId = matcher.group(4);
+
+                System.out.println("Ngay: " + date);
+                System.out.println("Nguoi dung: " + user);
+                System.out.println("Hanh dong: " + action);
+                System.out.println("Ma sach: " + bookId);
+                System.out.println("----------------------");
+
+                // Thống kê số lượt mượn và trả
+                if (action.equals("BORROW")) {
+                    borrowCount++;
+                } else {
+                    returnCount++;
+                }
             }
-
-            n = deleteBook(books , n , bookId);
         }
 
-        if(n == 0){
-            System.out.println("Da xoa tat ca ma sach");
-        }
+        // In kết quả thống kê
+        System.out.println("Tong so luot BORROW: " + borrowCount);
+        System.out.println("Tong so luot RETURN: " + returnCount);
     }
 }
