@@ -1,36 +1,23 @@
-public class b4 {
-    // Bubble sort
-    static void sortBooks(int[] arr){
-        for(int i = 0 ; i < arr.length - 1 ; i++){
-            for(int j = 0 ; j < arr.length - i - 1 ; j++){
-                if(arr[j] > arr[j+1]){
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
-                }
-            }
+public class Bai4_KiemTraMaTheThuVien {
+
+    public static void main(String[] args) {
+
+        // Mã thẻ thư viện cần kiểm tra
+        String cardID = "TV202312345";
+
+        if (isValidCard(cardID)) {
+            System.out.println("Ma the hop le!");
         }
     }
 
-    static void displayBooks(int arr[]){
-        for(int i = 0 ; i < arr.length ; i++){
-            System.out.print(arr[i]);
-            if(i < arr.length - 1){
-                System.out.print(", ");
-            }
+    
+    public static boolean isValidCard(String cardID) {
+
+        // Kiểm tra 2 chữ cái đầu (tiền tố)
+        if (!cardID.matches("^[A-Z]{2}.*")) {
+            System.out.println("Thieu hoac sai tien to (phai la 2 chu in hoa)");
+            return false;
         }
-        System.out.println();
-    }
 
-    public static void main(String[] args){
-        int[] books = {1203, 501, 2301, 150, 999};
-
-        System.out.print("Truoc khi sap xep :" );
-        displayBooks(books);
-
-        sortBooks(books);
-
-        System.out.print("Sau khi sap xep :");
-        displayBooks(books);
-    }
-}
+        // Kiểm tra 4 chữ số năm vào học
+        if (!cardID.matches("^[A-Z]{2
