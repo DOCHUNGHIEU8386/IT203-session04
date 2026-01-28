@@ -1,42 +1,47 @@
-public class b3 {
-    static void maxQuantityOfBooks(String[] names, int[] quantities){
-        int max = quantities[0];
-        // For-each
-        for(int q : quantities){
-            if(q > max){
-                max = q;
-            }
-        }
-        System.out.println("Sach co so luong nhieu nhat (" + max + ")");
-        for(int i = 0 ; i < quantities.length ; i++){
-            if(quantities[i] == max){
-                System.out.println(names[i]);
-            }
-        }
-    }
+import java.time.LocalDate;
 
-    static void  minQuantityOfBooks(String[] names, int[] quantities){
-        int min = quantities[0];
-        // for
-        for(int i = 0 ; i < quantities.length ; i++){
-            if(quantities[i] < min){
-                min = quantities[i];
-            }
-        }
-        System.out.println("Sach co so luong it nhat (" + min + ")");
-        for(int i = 0 ; i <quantities.length ; i++){
-            if(quantities[i] == min){
-                System.out.println(names[i]);
-            }
-        }
-    }
+public class Bai3_SoSanhStringVaStringBuilder {
+    public static void main(String[] args) {
 
-    public static void main(String[] args){
-        String[] names = {"Lap trinh Java", "Co so du lieu", "Cau truc du lieu", "Lap trinh Web", "Mang may tinh"};
-        int[] quantities = {12, 5, 12, 3, 3};
+        // Danh sách giao dịch mượn sách
+        String[] transactions = {
+                "BK001-20/01",
+                "BK005-21/01",
+                "BK099-22/01"
+        };
 
-        maxQuantityOfBooks(names, quantities);
-        System.out.println("---------------");
-        minQuantityOfBooks(names, quantities);
+        long startSB = System.currentTimeMillis(); // Bắt đầu đo thời gian
+
+        StringBuilder reportBuilder = new StringBuilder();
+
+        reportBuilder.append("--- BAO CAO MUON SACH ---\n");
+        reportBuilder.append("Ngay tao: ")
+                     .append(LocalDate.now())
+                     .append("\n");
+
+        for (String t : transactions) {
+            reportBuilder.append("Giao dich: ")
+                         .append(t)
+                         .append("\n");
+            // append() thay đổi trực tiếp trên cùng object
+        }
+
+        long endSB = System.currentTimeMillis(); // Kết thúc đo thời gian
+
+        long startStr = System.currentTimeMillis();
+
+        String reportString = "";
+
+        for (String t : transactions) {
+            reportString += "Giao dich: " + t + "\n";
+            // Mỗi lần + tạo ra một object String mới (String immutable)
+        }
+
+        long endStr = System.currentTimeMillis();
+
+        System.out.println(reportBuilder.toString());
+
+        System.out.println("Thoi gian StringBuilder: " + (endSB - startSB) + " ms");
+        System.out.println("Thoi gian String: " + (endStr - startStr) + " ms");
     }
 }
