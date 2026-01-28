@@ -1,30 +1,35 @@
-import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class b2 {
-    static int searchBooks(String[] arr , String search){
-        for(int i  = 0 ; i < arr.length ; i++){
-            if(arr[i].equalsIgnoreCase(search)){
-                // dùng equalsIgnoreCase để so sách chuỗi , equal thì tham số vào là object , == không được dùng để so sánh cho string
-                return i;
+public class Bai2_TimViTriLuuTruSach {
+    public static void main(String[] args) {
+
+        // Chuỗi mô tả thông tin sách
+        String description = "Sach giao khoa Toan lop 12, Ke: A1-102, tinh trang moi";
+
+        // Kiểm tra xem chuỗi có chứa thông tin kệ sách hay không
+        if (description.contains("Ke:")) {
+
+           
+            Pattern pattern = Pattern.compile("Ke:\\s*([^,\\n]+)");
+            Matcher matcher = pattern.matcher(description);
+
+            // Nếu tìm thấy vị trí lưu trữ
+            if (matcher.find()) {
+                // group(1) là phần nội dung nằm trong dấu ngoặc ()
+                String location = matcher.group(1).trim();
+                System.out.println("Vi tri tim thay: " + location);
             }
-        }
-        return -1;
-    }
 
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
+            // Thay thế "Ke:" bằng nội dung đầy đủ hơn
+            String newDescription = description.replace(
+                    "Ke:", "Vi tri luu tru:"
+            );
 
-        String[] books = {"Lap trinh Java", "Co so du lieu", "Cau truc du lieu", "Lap trinh Web", "Mang may tinh"};
+            System.out.println("Mo ta moi: " + newDescription);
 
-        System.out.print("Nhap ten sach can tim :");
-        String search = sc.nextLine();
-
-        int index = searchBooks(books , search);
-
-        if(index != -1){
-            System.out.println("Tim thay sach " + search + " tai vi tri so : " + index);
-        }else{
-            System.out.println("Sach khong ton tai trong thu vien");
+        } else {
+            System.out.println("Khong tim thay thong tin ke sach");
         }
     }
 }
