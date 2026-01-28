@@ -1,38 +1,40 @@
 import java.util.Scanner;
 
-public class b1 {
-
-    static int[] addBookToLibraries(int n){
-        Scanner sc = new Scanner(System.in);
-        int[] books = new int[n];
-
-        System.out.println("Nhap ma sach cho " + n + " cuon sach");
-        for(int i = 0 ; i < n ; i++){
-            System.out.print("Sach thu " + (i + 1) + " :");
-            books[i] = sc.nextInt();
-        }
-
-        return books;
-    }
-
-    static void displayLibraries(int[] arr){
-        System.out.println("--- Ket Qua ---");
-        System.out.print("Danh sach ma : ");
-        for(int i = 0 ; i < arr.length ; i++){
-            System.out.print(arr[i]);
-            if(i < arr.length - 1){
-                System.out.print(", ");
-            }
-        }
-    }
-
-    public static void main(String[] args){
+public class Bai1_ChuanHoaThongTinSach {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Nhap so luong sach can quan ly : ");
-        int n = sc.nextInt();
+        // Nhập tên sách
+        System.out.print("Nhap vao ten sach: ");
+        String bookName = sc.nextLine();
 
-        int[] libarary = addBookToLibraries(n);
-        displayLibraries(libarary);
+        // Nhập tên tác giả
+        System.out.print("Nhap ten tac gia: ");
+        String authorName = sc.nextLine();
+
+        /*
+         * Chuẩn hóa chuỗi:
+         * - trim(): xóa khoảng trắng đầu và cuối
+        bookName = bookName.trim().replaceAll("\\s+", " ");
+        authorName = authorName.trim().replaceAll("\\s+", " ");
+
+        // Chuyển tên sách thành chữ in hoa
+        bookName = bookName.toUpperCase();
+
+        //  viết hoa chữ cái đầu mỗi từ
+        String[] words = authorName.split(" ");
+        StringBuilder formattedAuthor = new StringBuilder();
+
+        for (String word : words) {
+            formattedAuthor.append(
+                    Character.toUpperCase(word.charAt(0))
+                            + word.substring(1).toLowerCase()
+                            + " "
+            );
+        }
+
+        authorName = formattedAuthor.toString().trim();
+
+        System.out.println("[" + bookName + "] - Tac gia: " + authorName);
     }
 }
